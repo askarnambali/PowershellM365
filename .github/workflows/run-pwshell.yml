@@ -15,6 +15,21 @@ jobs:
         shell: pwsh
         run: |
 
+         echo "ADMIN_SITE_URL=${{ secrets.ADMIN_SITE_URL }}" >> $GITHUB_ENV
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
+          echo "TENANT_ID=${{ secrets.TENANT_ID }}" >> $GITHUB_ENV
+          echo "CERT_PATH=${{ secrets.CERT_PATH }}" >> $GITHUB_ENV
+          echo "CERT_PASSWORD=${{ secrets.CERT_PASSWORD }}" >> $GITHUB_ENV
+
+      - name: Run PowerShell Script
+        shell: pwsh
+        run: |
+          $adminSiteUrl = "$env:ADMIN_SITE_URL"
+          $clientId = "$env:CLIENT_ID"
+          $tenantId = "$env:TENANT_ID"
+          $certificatePath = "$env:CERT_PATH"
+          $certificatePassword = "$env:CERT_PASSWORD"
+
 # --- Connect using App-Only Certificate Authentication ---
 Connect-PnPOnline -Url $adminSiteUrl `
                   -ClientId $clientId `
