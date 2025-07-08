@@ -1,3 +1,20 @@
+name: Run PowerShell Script
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-powershell:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Run PowerShell Script
+        shell: pwsh
+        run: |
+
 # --- Connect using App-Only Certificate Authentication ---
 Connect-PnPOnline -Url $adminSiteUrl `
                   -ClientId $clientId `
