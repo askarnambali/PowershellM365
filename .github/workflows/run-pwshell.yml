@@ -7,19 +7,18 @@ jobs:
   run-powershell:
     runs-on: windows-latest
 
-    steps:
+   steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Run PowerShell Script
+      - name: Set Environment Variables from Secrets
         shell: pwsh
         run: |
-
-         echo "ADMINSITEURL=${{ secrets.ADMINSITEURL }}" >> $GITHUB_ENV
-          echo "CLIENTID=${{ secrets.CLIENTID }}" >> $GITHUB_ENV
-          echo "TENANTID=${{ secrets.TENANTID }}" >> $GITHUB_ENV
-          echo "CERTPATH=${{ secrets.CERTPATH }}" >> $GITHUB_ENV
-          echo "CERTPASSWORD=${{ secrets.CERTPASSWORD }}" >> $GITHUB_ENV
+          echo "ADMINSITEURL=${{ secrets.ADMINSITEURL }}" >> $env:GITHUB_ENV
+          echo "CLIENTID=${{ secrets.CLIENTID }}" >> $env:GITHUB_ENV
+          echo "TENANTID=${{ secrets.TENANTID }}" >> $env:GITHUB_ENV
+          echo "CERTPATH=${{ secrets.CERTPATH }}" >> $env:GITHUB_ENV
+          echo "CERTPASSWORD=${{ secrets.CERTPASSWORD }}" >> $env:GITHUB_ENV
 
       - name: Run PowerShell Script
         shell: pwsh
@@ -30,12 +29,12 @@ jobs:
           $certificatePath = "$env:CERTPATH"
           $certificatePassword = "$env:CERTPASSWORD"
 
-# --- Connect using App-Only Certificate Authentication ---
-Connect-PnPOnline -Url $adminSiteUrl `
-                  -ClientId $clientId `
-                  -Tenant $tenantId `
-                  -CertificatePath $certificatePath `
-                  -CertificatePassword (ConvertTo-SecureString $certificatePassword -AsPlainText -Force)
+          # --- Connect using App-Only Certificate Authentication ---
+          Connect-PnPOnline -Url $adminSiteUrl `
+                            -ClientId $clientId `
+                            -Tenant $tenantId `
+                            -CertificatePath $certificatePath `
+                            -CertificatePassword (ConvertTo-SecureString $certificatePassword -AsPlainText -Force)
 
 # --- Get All SharePoint Sites (excluding OneDrive) ---
 $sites = Get-PnPTenantSite -IncludeOneDriveSites:$false | Where-Object { $_.Url -like "https://dandbdubai.sharepoint.com/sites/*" }
