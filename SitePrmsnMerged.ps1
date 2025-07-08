@@ -1,11 +1,3 @@
-# --- CONFIGURATION ---
-$tenantId           = "d4b07abe-b466-4558-a63f-dc15f05f3693"                     # e.g., 8f123456-xxxx-4f5c-xxxx-xxxxxxxxxxxx
-$clientId           = "099a7e49-1e07-4b26-b592-daa79079711d"                     # App Registration's Application (client) ID
-$certificatePath    = "C:\Users\askar.mohamed\OneDrive - AL BAYARI\Documents\PnP Certificate\BayariICT1.pfx"
-$certificatePassword = "20Marza25$"
-$adminSiteUrl       = "https://dandbdubai-admin.sharepoint.com"
-$exportPath         = "C:\Users\askar.mohamed\OneDrive - AL BAYARI\Documents\VSCode Powershell\Sitespermission.csv"
-
 # --- Connect using App-Only Certificate Authentication ---
 Connect-PnPOnline -Url $adminSiteUrl `
                   -ClientId $clientId `
